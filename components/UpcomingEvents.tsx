@@ -119,6 +119,64 @@ export default function UpcomingEvents() {
     setCurrentX(0);
   };
 
+  const EventCard = ({ event }: { event: typeof events[0] }) => (
+    <div className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
+      <div className="relative">
+        <img
+          src={event.image || "/placeholder.svg"}
+          alt={event.title}
+          className="w-full h-56 object-cover"
+        />
+        <div className="absolute top-6 left-6">
+          <span
+            className={`px-4 py-2 rounded-full text-sm font-semibold ${
+              event.category === "Cultural"
+                ? "bg-purple-100 text-purple-800"
+                : event.category === "Spiritual"
+                ? "bg-blue-100 text-blue-800"
+                : "bg-green-100 text-green-800"
+            }`}
+          >
+            {event.category}
+          </span>
+        </div>
+      </div>
+
+      <div className="p-8">
+        <h3 className="text-xl font-bold text-gray-900 mb-4">
+          {event.title}
+        </h3>
+        <p className="text-gray-600 mb-6 line-clamp-2 leading-relaxed">
+          {event.description}
+        </p>
+
+        <div className="space-y-3 mb-6">
+          <div className="flex items-center text-gray-500">
+            <Calendar size={18} className="mr-3 text-[#f75101]" />
+            {new Date(event.date).toLocaleDateString("en-US", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </div>
+          <div className="flex items-center text-gray-500">
+            <Clock size={18} className="mr-3 text-[#f75101]" />
+            {event.time}
+          </div>
+          <div className="flex items-center text-gray-500">
+            <MapPin size={18} className="mr-3 text-[#f75101]" />
+            {event.location}
+          </div>
+        </div>
+
+        <Button className="w-full bg-[#f75101] hover:bg-[#e64100] text-white py-3 text-lg font-semibold">
+          Register Now
+        </Button>
+      </div>
+    </div>
+  );
+
   return (
     <section className="py-24 px-6 sm:px-8 lg:px-12 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -132,133 +190,92 @@ export default function UpcomingEvents() {
             </p>
           </div>
 
-          <div className="hidden md:flex space-x-3">
+          {/* Desktop navigation - only show if there are more than 3 events */}
+          {events.length > 3 && (
+            <div className="hidden md:flex space-x-3">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={prevSlide}
+                className="rounded-full border-[#f75101] text-[#f75101] hover:bg-[#f75101] hover:text-white bg-transparent w-12 h-12"
+              >
+                <ChevronLeft size={24} />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={nextSlide}
+                className="rounded-full border-[#f75101] text-[#f75101] hover:bg-[#f75101] hover:text-white bg-transparent w-12 h-12"
+              >
+                <ChevronRight size={24} />
+              </Button>
+            </div>
+          )}
+        </div>
+
+        {/* Desktop Grid View - 3 columns */}
+        <div className="hidden md:grid md:grid-cols-3 gap-8">
+          {events.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
+        </div>
+
+        {/* Mobile Carousel View */}
+        <div className="md:hidden">
+          <div
+            ref={carouselRef}
+            className="relative overflow-hidden px-4"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{
+                transform: `translateX(-${currentIndex * 100}%)`,
+                pointerEvents: isDragging ? "none" : "auto",
+              }}
+            >
+              {events.map((event) => (
+                <div key={event.id} className="w-full flex-shrink-0 px-2">
+                  <EventCard event={event} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile navigation */}
+          <div className="flex justify-center items-center mt-12 space-x-4">
             <Button
               variant="outline"
               size="icon"
               onClick={prevSlide}
-              className="rounded-full border-[#f75101] text-[#f75101] hover:bg-[#f75101] hover:text-white bg-transparent w-12 h-12"
+              className="rounded-full border-[#f75101] text-[#f75101] hover:bg-[#f75101] hover:text-white bg-transparent w-10 h-10"
             >
-              <ChevronLeft size={24} />
+              <ChevronLeft size={20} />
             </Button>
+
+            <div className="flex space-x-2">
+              {Array.from({ length: events.length }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${
+                    index === currentIndex ? "bg-[#f75101]" : "bg-gray-300"
+                  }`}
+                />
+              ))}
+            </div>
+
             <Button
               variant="outline"
               size="icon"
               onClick={nextSlide}
-              className="rounded-full border-[#f75101] text-[#f75101] hover:bg-[#f75101] hover:text-white bg-transparent w-12 h-12"
+              className="rounded-full border-[#f75101] text-[#f75101] hover:bg-[#f75101] hover:text-white bg-transparent w-10 h-10"
             >
-              <ChevronRight size={24} />
+              <ChevronRight size={20} />
             </Button>
           </div>
-        </div>
-
-        <div
-          ref={carouselRef}
-          className="relative overflow-hidden px-4 md:px-0"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${currentIndex * 100}%)`,
-              pointerEvents: isDragging ? "none" : "auto",
-            }}
-          >
-            {events.map((event) => (
-              <div key={event.id} className="w-full flex-shrink-0 px-2 md:px-0">
-                <div className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-                  <div className="relative">
-                    <img
-                      src={event.image || "/placeholder.svg"}
-                      alt={event.title}
-                      className="w-full h-56 object-cover"
-                    />
-                    <div className="absolute top-6 left-6">
-                      <span
-                        className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                          event.category === "Cultural"
-                            ? "bg-purple-100 text-purple-800"
-                            : event.category === "Spiritual"
-                            ? "bg-blue-100 text-blue-800"
-                            : "bg-green-100 text-green-800"
-                        }`}
-                      >
-                        {event.category}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-8">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">
-                      {event.title}
-                    </h3>
-                    <p className="text-gray-600 mb-6 line-clamp-2 leading-relaxed">
-                      {event.description}
-                    </p>
-
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center text-gray-500">
-                        <Calendar size={18} className="mr-3 text-[#f75101]" />
-                        {new Date(event.date).toLocaleDateString("en-US", {
-                          weekday: "long",
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </div>
-                      <div className="flex items-center text-gray-500">
-                        <Clock size={18} className="mr-3 text-[#f75101]" />
-                        {event.time}
-                      </div>
-                      <div className="flex items-center text-gray-500">
-                        <MapPin size={18} className="mr-3 text-[#f75101]" />
-                        {event.location}
-                      </div>
-                    </div>
-
-                    <Button className="w-full bg-[#f75101] hover:bg-[#e64100] text-white py-3 text-lg font-semibold">
-                      Register Now
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile navigation */}
-        <div className="flex justify-center items-center mt-12 md:hidden space-x-4">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={prevSlide}
-            className="rounded-full border-[#f75101] text-[#f75101] hover:bg-[#f75101] hover:text-white bg-transparent w-10 h-10"
-          >
-            <ChevronLeft size={20} />
-          </Button>
-
-          <div className="flex space-x-2">
-            {Array.from({ length: events.length }).map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  index === currentIndex ? "bg-[#f75101]" : "bg-gray-300"
-                }`}
-              />
-            ))}
-          </div>
-
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={nextSlide}
-            className="rounded-full border-[#f75101] text-[#f75101] hover:bg-[#f75101] hover:text-white bg-transparent w-10 h-10"
-          >
-            <ChevronRight size={20} />
-          </Button>
         </div>
       </div>
     </section>
