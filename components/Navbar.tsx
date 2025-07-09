@@ -27,7 +27,7 @@ export default function Navbar() {
             <div className="w-8 h-8 bg-[#f75101] rounded-full flex items-center justify-center">
               <span className="text-white font-bold text-sm">S</span>
             </div>
-            <span className="font-bold text-xl text-gray-900">Sukwal Community</span>
+            <span className="font-bold text-xl text-gray-900">Sukhwal Community</span>
           </Link>
 
           {/* Desktop Navigation */}

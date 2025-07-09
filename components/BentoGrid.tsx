@@ -83,7 +83,7 @@ export default function BentoGrid() {
         <div className="text-center mb-20">
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Explore Our Community</h2>
           <p className="text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Discover all the ways to connect, engage, and grow with the Sukwal community
+            Discover all the ways to connect, engage, and grow with the Sukhwal community
           </p>
         </div>
 

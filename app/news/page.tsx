@@ -36,7 +36,7 @@ const newsData = [
     title: "New Educational Scholarship Program",
     excerpt:
       "Introducing scholarships for deserving students from our community to pursue higher education. Applications are now open for the 2024-25 academic year.",
-    content: "The Sukwal Community Education Foundation is proud to launch a new scholarship program...",
+    content: "The Sukhwal Community Education Foundation is proud to launch a new scholarship program...",
     date: "2024-11-05",
     category: "Education",
     image: "/placeholder.svg?height=300&width=500&text=Scholarship+Program",

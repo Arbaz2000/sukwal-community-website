@@ -1,6 +1,6 @@
 # Admin Panel Setup
 
-This guide will help you set up the admin panel for the Sukwal Community Website.
+This guide will help you set up the admin panel for the Sukhwal Community Website.
 
 ## Prerequisites
 
@@ -89,7 +89,7 @@ Once setup is complete, you can access the admin panel at:
 
 ### Default Admin Credentials
 
-- **Email**: admin@sukwal.com
+- **Email**: admin@Sukhwal.com
 - **Password**: admin123
 
 **Important**: Change these credentials after first login for security.

@@ -7,7 +7,7 @@ const jobsData = [
   {
     id: 1,
     title: "Community Event Coordinator",
-    company: "Sukwal Community Center",
+    company: "Sukhwal Community Center",
     location: "Mumbai, Maharashtra",
     type: "Full-time",
     experience: "2-4 years",
@@ -29,7 +29,7 @@ const jobsData = [
   {
     id: 2,
     title: "Youth Program Manager",
-    company: "Sukwal Youth Committee",
+    company: "Sukhwal Youth Committee",
     location: "Mumbai, Maharashtra",
     type: "Full-time",
     experience: "3-5 years",
@@ -51,7 +51,7 @@ const jobsData = [
   {
     id: 3,
     title: "Finance Assistant",
-    company: "Sukwal Community Trust",
+    company: "Sukhwal Community Trust",
     location: "Mumbai, Maharashtra",
     type: "Part-time",
     experience: "1-3 years",
@@ -73,7 +73,7 @@ const jobsData = [
   {
     id: 4,
     title: "Cultural Program Instructor",
-    company: "Sukwal Cultural Academy",
+    company: "Sukhwal Cultural Academy",
     location: "Mumbai, Maharashtra",
     type: "Contract",
     experience: "5+ years",
@@ -95,7 +95,7 @@ const jobsData = [
   {
     id: 5,
     title: "IT Support Specialist",
-    company: "Sukwal Community Center",
+    company: "Sukhwal Community Center",
     location: "Mumbai, Maharashtra",
     type: "Part-time",
     experience: "2-4 years",
@@ -117,7 +117,7 @@ const jobsData = [
   {
     id: 6,
     title: "Community Outreach Volunteer Coordinator",
-    company: "Sukwal Service Committee",
+    company: "Sukhwal Service Committee",
     location: "Mumbai, Maharashtra",
     type: "Full-time",
     experience: "1-3 years",

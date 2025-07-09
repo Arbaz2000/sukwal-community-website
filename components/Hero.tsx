@@ -8,7 +8,7 @@ export default function Hero() {
       <div className="absolute inset-0">
         <img
           src="/images/DSC06066.JPG"
-          alt="Sukwal Community"
+          alt="Sukhwal Community"
           className="w-full h-full object-cover"
         />
         {/* Simplified overlay */}
@@ -29,7 +29,7 @@ export default function Hero() {
             Welcome to the
           </h1>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-yellow-200 mb-8 animate-fade-in-delay drop-shadow-lg leading-tight">
-            Sukwal Community
+            Sukhwal Community
           </h2>
         </div>
 

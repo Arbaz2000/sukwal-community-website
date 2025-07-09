@@ -26,7 +26,7 @@ export default function AdminHeader({ user }: AdminHeaderProps) {
       <div className="flex justify-between items-center px-6 py-4">
         <div>
           <h2 className="text-lg font-semibold text-gray-900">
-            Sukwal Community Admin
+            Sukhwal Community Admin
           </h2>
         </div>
         <div className="flex items-center space-x-4">

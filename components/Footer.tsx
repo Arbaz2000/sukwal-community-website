@@ -12,7 +12,7 @@ export default function Footer() {
               <div className="w-10 h-10 bg-[#f75101] rounded-full flex items-center justify-center">
                 <span className="text-white font-bold">S</span>
               </div>
-              <span className="font-bold text-xl">Sukwal Community</span>
+              <span className="font-bold text-xl">Sukhwal Community</span>
             </div>
             <p className="text-gray-400 mb-6">
               Connecting hearts, preserving traditions, and building a stronger community through culture and
@@ -112,14 +112,14 @@ export default function Footer() {
               </div>
               <div className="flex items-center">
                 <Mail size={16} className="text-[#f75101] mr-3 flex-shrink-0" />
-                <span className="text-gray-400 text-sm">info@sukwalcommunity.org</span>
+                <span className="text-gray-400 text-sm">info@Sukhwalcommunity.org</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">© {new Date().getFullYear()} Sukwal Community. All rights reserved.</p>
+          <p className="text-gray-400 text-sm">© {new Date().getFullYear()} Sukhwal Community. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link href="/privacy" className="text-gray-400 hover:text-[#f75101] text-sm transition-colors">
               Privacy Policy

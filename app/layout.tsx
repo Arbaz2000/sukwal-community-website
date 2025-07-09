@@ -9,9 +9,9 @@ import SessionProvider from "@/components/providers/SessionProvider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Sukwal Community - Connecting Culture & Spirituality",
+  title: "Sukhwal Community - Connecting Culture & Spirituality",
   description:
-    "Join the vibrant Sukwal community for cultural events, spiritual gatherings, and meaningful connections.",
+    "Join the vibrant Sukhwal community for cultural events, spiritual gatherings, and meaningful connections.",
     generator: 'v0.dev'
 }
 
