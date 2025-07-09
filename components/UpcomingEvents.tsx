@@ -1,8 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Calendar, MapPin, Clock, ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { useState, useRef, useEffect } from "react";
+import {
+  Calendar,
+  MapPin,
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const events = [
   {
@@ -24,7 +30,8 @@ const events = [
     location: "Temple Premises",
     category: "Spiritual",
     image: "/placeholder.svg?height=200&width=300",
-    description: "Weekly spiritual discourse on ancient wisdom and modern living.",
+    description:
+      "Weekly spiritual discourse on ancient wisdom and modern living.",
   },
   {
     id: 3,
@@ -34,7 +41,8 @@ const events = [
     location: "Community Center",
     category: "Cultural",
     image: "/placeholder.svg?height=200&width=300",
-    description: "A vibrant cultural program showcasing the talents of our youth community.",
+    description:
+      "A vibrant cultural program showcasing the talents of our youth community.",
   },
   {
     id: 4,
@@ -44,7 +52,8 @@ const events = [
     location: "Various Locations",
     category: "Service",
     image: "/placeholder.svg?height=200&width=300",
-    description: "Join hands in serving the community through various social service activities.",
+    description:
+      "Join hands in serving the community through various social service activities.",
   },
   {
     id: 5,
@@ -54,28 +63,73 @@ const events = [
     location: "Community Kitchen",
     category: "Cultural",
     image: "/placeholder.svg?height=200&width=300",
-    description: "Learn traditional recipes and cooking techniques from our elders.",
+    description:
+      "Learn traditional recipes and cooking techniques from our elders.",
   },
-]
+];
 
 export default function UpcomingEvents() {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [currentX, setCurrentX] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % Math.max(1, events.length - 2))
-  }
+    setCurrentIndex((prev) => (prev + 1) % Math.max(1, events.length - 1));
+  };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + Math.max(1, events.length - 2)) % Math.max(1, events.length - 2))
-  }
+    setCurrentIndex(
+      (prev) =>
+        (prev - 1 + Math.max(1, events.length - 1)) %
+        Math.max(1, events.length - 1)
+    );
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].clientX);
+    setCurrentX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    setCurrentX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+
+    const diff = startX - currentX;
+    const threshold = 50; // minimum swipe distance
+
+    if (Math.abs(diff) > threshold) {
+      if (diff > 0) {
+        // Swiped left - next slide
+        nextSlide();
+      } else {
+        // Swiped right - previous slide
+        prevSlide();
+      }
+    }
+
+    setIsDragging(false);
+    setStartX(0);
+    setCurrentX(0);
+  };
 
   return (
     <section className="py-24 px-6 sm:px-8 lg:px-12 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-16">
           <div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Upcoming Events</h2>
-            <p className="text-xl lg:text-2xl text-gray-600">Don't miss out on our exciting community events</p>
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Upcoming Events
+            </h2>
+            <p className="text-xl lg:text-2xl text-gray-600">
+              Don't miss out on our exciting community events
+            </p>
           </div>
 
           <div className="hidden md:flex space-x-3">
@@ -98,13 +152,22 @@ export default function UpcomingEvents() {
           </div>
         </div>
 
-        <div className="relative overflow-hidden">
+        <div
+          ref={carouselRef}
+          className="relative overflow-hidden px-4 md:px-0"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           <div
-            className="flex transition-transform duration-500 ease-in-out gap-8"
-            style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{
+              transform: `translateX(-${currentIndex * 100}%)`,
+              pointerEvents: isDragging ? "none" : "auto",
+            }}
           >
             {events.map((event) => (
-              <div key={event.id} className="w-full md:w-1/3 flex-shrink-0">
+              <div key={event.id} className="w-full flex-shrink-0 px-2 md:px-0">
                 <div className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
                   <div className="relative">
                     <img
@@ -118,8 +181,8 @@ export default function UpcomingEvents() {
                           event.category === "Cultural"
                             ? "bg-purple-100 text-purple-800"
                             : event.category === "Spiritual"
-                              ? "bg-blue-100 text-blue-800"
-                              : "bg-green-100 text-green-800"
+                            ? "bg-blue-100 text-blue-800"
+                            : "bg-green-100 text-green-800"
                         }`}
                       >
                         {event.category}
@@ -128,8 +191,12 @@ export default function UpcomingEvents() {
                   </div>
 
                   <div className="p-8">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">{event.title}</h3>
-                    <p className="text-gray-600 mb-6 line-clamp-2 leading-relaxed">{event.description}</p>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">
+                      {event.title}
+                    </h3>
+                    <p className="text-gray-600 mb-6 line-clamp-2 leading-relaxed">
+                      {event.description}
+                    </p>
 
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center text-gray-500">
@@ -161,19 +228,39 @@ export default function UpcomingEvents() {
           </div>
         </div>
 
-        {/* Mobile navigation dots */}
-        <div className="flex justify-center mt-12 md:hidden">
-          {Array.from({ length: Math.max(1, events.length - 2) }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full mx-2 transition-colors ${
-                index === currentIndex ? "bg-[#f75101]" : "bg-gray-300"
-              }`}
-            />
-          ))}
+        {/* Mobile navigation */}
+        <div className="flex justify-center items-center mt-12 md:hidden space-x-4">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={prevSlide}
+            className="rounded-full border-[#f75101] text-[#f75101] hover:bg-[#f75101] hover:text-white bg-transparent w-10 h-10"
+          >
+            <ChevronLeft size={20} />
+          </Button>
+
+          <div className="flex space-x-2">
+            {Array.from({ length: events.length }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-3 h-3 rounded-full transition-colors ${
+                  index === currentIndex ? "bg-[#f75101]" : "bg-gray-300"
+                }`}
+              />
+            ))}
+          </div>
+
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={nextSlide}
+            className="rounded-full border-[#f75101] text-[#f75101] hover:bg-[#f75101] hover:text-white bg-transparent w-10 h-10"
+          >
+            <ChevronRight size={20} />
+          </Button>
         </div>
       </div>
     </section>
-  )
+  );
 }

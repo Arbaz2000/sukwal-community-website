@@ -79,9 +79,36 @@ export default function NewsCirculars() {
           <p className="text-xl lg:text-2xl text-gray-600">Stay informed with the latest updates and announcements</p>
         </div>
 
-        {/* Tab Navigation with more spacing */}
-        <div className="flex justify-center mb-16">
-          <div className="bg-white rounded-full p-2 shadow-lg">
+        {/* Tab Navigation - Responsive Design */}
+        <div className="flex justify-center mb-12 md:mb-16">
+          {/* Mobile Layout */}
+          <div className="md:hidden bg-white rounded-full p-1 shadow-lg w-full max-w-sm">
+            <div className="flex">
+              <button
+                onClick={() => setActiveTab("news")}
+                className={`flex-1 px-4 py-3 rounded-full font-semibold text-sm transition-all duration-300 ${
+                  activeTab === "news" 
+                    ? "bg-[#f75101] text-white shadow-lg" 
+                    : "text-gray-600 hover:text-[#f75101]"
+                }`}
+              >
+                Latest News
+              </button>
+              <button
+                onClick={() => setActiveTab("circulars")}
+                className={`flex-1 px-4 py-3 rounded-full font-semibold text-sm transition-all duration-300 ${
+                  activeTab === "circulars" 
+                    ? "bg-[#f75101] text-white shadow-lg" 
+                    : "text-gray-600 hover:text-[#f75101]"
+                }`}
+              >
+                Circulars
+              </button>
+            </div>
+          </div>
+
+          {/* Desktop Layout */}
+          <div className="hidden md:block bg-white rounded-full p-2 shadow-lg">
             <button
               onClick={() => setActiveTab("news")}
               className={`px-10 py-4 rounded-full font-semibold text-lg transition-all duration-300 ${
@@ -118,7 +145,11 @@ export default function NewsCirculars() {
                       </span>
                       <div className="flex items-center text-gray-500 text-sm">
                         <Calendar size={16} className="mr-2" />
-                        {new Date(news.date).toLocaleDateString()}
+                        {new Date(news.date).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit"
+                        })}
                       </div>
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-4">{news.title}</h3>
@@ -155,7 +186,11 @@ export default function NewsCirculars() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center text-gray-500">
                           <Calendar size={16} className="mr-2" />
-                          {new Date(circular.date).toLocaleDateString()}
+                          {new Date(circular.date).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit"
+                          })}
                           <span className="ml-6 px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
                             {circular.type}
                           </span>

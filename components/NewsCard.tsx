@@ -60,7 +60,11 @@ export default function NewsCard({ news, featured }: NewsCardProps) {
             <div className="flex items-center text-gray-500 text-sm mb-6 space-x-4">
               <div className="flex items-center">
                 <Calendar size={14} className="mr-1" />
-                {new Date(news.date).toLocaleDateString()}
+                {new Date(news.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit"
+                })}
               </div>
               <div className="flex items-center">
                 <User size={14} className="mr-1" />
@@ -89,7 +93,11 @@ export default function NewsCard({ news, featured }: NewsCardProps) {
           </span>
           <div className="flex items-center text-gray-500 text-sm">
             <Calendar size={14} className="mr-1" />
-            {new Date(news.date).toLocaleDateString()}
+            {new Date(news.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit"
+            })}
           </div>
         </div>
         <h3 className="text-xl font-bold text-gray-900 mb-3">{news.title}</h3>

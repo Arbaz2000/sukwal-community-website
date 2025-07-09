@@ -65,7 +65,11 @@ export default function CircularCard({ circular }: CircularCardProps) {
           </span>
           <div className="flex items-center">
             <Calendar size={14} className="mr-1" />
-            {new Date(circular.date).toLocaleDateString()}
+            {new Date(circular.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit"
+            })}
           </div>
           <div className="flex items-center">
             <User size={14} className="mr-1" />
@@ -73,7 +77,11 @@ export default function CircularCard({ circular }: CircularCardProps) {
           </div>
           <div className="flex items-center">
             <Clock size={14} className="mr-1" />
-            Valid until {new Date(circular.validUntil).toLocaleDateString()}
+            Valid until {new Date(circular.validUntil).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit"
+            })}
           </div>
         </div>
 

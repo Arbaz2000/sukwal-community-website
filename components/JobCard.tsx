@@ -98,11 +98,19 @@ export default function JobCard({ job, featured }: JobCardProps) {
             <div className="flex items-center text-gray-500 text-sm space-x-4">
               <div className="flex items-center">
                 <Calendar size={14} className="mr-1" />
-                Posted {new Date(job.postedDate).toLocaleDateString()}
+                Posted {new Date(job.postedDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit"
+                })}
               </div>
               <div className="flex items-center">
                 <Clock size={14} className="mr-1" />
-                Apply by {new Date(job.deadline).toLocaleDateString()}
+                Apply by {new Date(job.deadline).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit"
+                })}
               </div>
             </div>
             <Button className="bg-[#f75101] hover:bg-[#e64100] text-white px-6">Apply Now</Button>
@@ -141,11 +149,19 @@ export default function JobCard({ job, featured }: JobCardProps) {
         <div className="flex items-center text-gray-500 text-sm space-x-4">
           <div className="flex items-center">
             <Calendar size={14} className="mr-1" />
-            {new Date(job.postedDate).toLocaleDateString()}
+            {new Date(job.postedDate).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit"
+            })}
           </div>
           <div className="flex items-center">
             <Clock size={14} className="mr-1" />
-            Apply by {new Date(job.deadline).toLocaleDateString()}
+            Apply by {new Date(job.deadline).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit"
+            })}
           </div>
         </div>
         <div className="flex gap-2">

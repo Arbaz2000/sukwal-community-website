@@ -79,7 +79,11 @@ export default function GalleryGrid({ images, viewMode }: GalleryGridProps) {
                   </span>
                   <div className="flex items-center text-gray-500 text-sm">
                     <Calendar size={14} className="mr-1" />
-                    {new Date(image.date).toLocaleDateString()}
+                    {new Date(image.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit"
+                    })}
                   </div>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">{image.title}</h3>
@@ -165,7 +169,11 @@ export default function GalleryGrid({ images, viewMode }: GalleryGridProps) {
                   </div>
                 </div>
                 <h3 className="font-bold text-sm">{image.title}</h3>
-                <p className="text-xs text-white/80">{new Date(image.date).toLocaleDateString()}</p>
+                <p className="text-xs text-white/80">{new Date(image.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit"
+                })}</p>
               </div>
             </div>
 
@@ -218,7 +226,11 @@ export default function GalleryGrid({ images, viewMode }: GalleryGridProps) {
               <h3 className="text-xl font-bold mb-2">{selectedImage.title}</h3>
               <p className="text-white/90 mb-3">{selectedImage.description}</p>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-white/70">{new Date(selectedImage.date).toLocaleDateString()}</span>
+                <span className="text-sm text-white/70">{new Date(selectedImage.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit"
+                })}</span>
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
