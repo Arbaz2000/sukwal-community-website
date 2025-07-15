@@ -13,6 +13,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import ImageActions from "@/components/admin/ImageActions"
+import { getImageUrl } from "@/lib/image-utils"
 
 export default async function AdminGallery() {
   const session = await getServerSession(authOptions)
@@ -75,7 +76,7 @@ export default async function AdminGallery() {
             <Card key={image.id} className="overflow-hidden">
               <div className="aspect-square relative">
                 <img
-                  src={image.path}
+                  src={getImageUrl(image.filename)}
                   alt={image.originalName}
                   className="w-full h-full object-cover"
                 />

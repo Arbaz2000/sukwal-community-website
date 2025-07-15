@@ -37,42 +37,74 @@ export async function POST(request: NextRequest) {
 
     // Create uploads directory if it doesn't exist
     const uploadsDir = join(process.cwd(), "public", "uploads")
-    if (!existsSync(uploadsDir)) {
-      await mkdir(uploadsDir, { recursive: true })
+    try {
+      if (!existsSync(uploadsDir)) {
+        await mkdir(uploadsDir, { recursive: true })
+      }
+    } catch (dirError) {
+      console.error("Directory creation error:", dirError)
+      return NextResponse.json(
+        { error: "Failed to create uploads directory" },
+        { status: 500 }
+      )
     }
 
     // Generate unique filename
     const timestamp = Date.now()
     const randomString = Math.random().toString(36).substring(2, 15)
-    const extension = file.name.split(".").pop()
+    const extension = file.name.split(".").pop() || "jpg"
     const filename = `${timestamp}-${randomString}.${extension}`
     const filepath = join(uploadsDir, filename)
 
     // Convert file to buffer and save
-    const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
-    await writeFile(filepath, buffer)
+    try {
+      const bytes = await file.arrayBuffer()
+      const buffer = Buffer.from(bytes)
+      await writeFile(filepath, buffer)
+    } catch (fileError) {
+      console.error("File write error:", fileError)
+      return NextResponse.json(
+        { error: "Failed to save file" },
+        { status: 500 }
+      )
+    }
 
     // Save to database
-    const image = await prisma.image.create({
-      data: {
-        filename,
-        originalName: file.name,
-        path: `/uploads/${filename}`,
-        size: file.size,
-        mimeType: file.type,
-        uploadedBy: session.user.email || "admin",
-        category: category || null,
-        description: description || null,
-      },
-    })
+    let image
+    try {
+      image = await prisma.image.create({
+        data: {
+          filename,
+          originalName: file.name,
+          path: `/uploads/${filename}`,
+          size: file.size,
+          mimeType: file.type,
+          uploadedBy: session.user.email || "admin",
+          category: category || null,
+          description: description || null,
+        },
+      })
+    } catch (dbError) {
+      console.error("Database error:", dbError)
+      // Try to clean up the file if database save fails
+      try {
+        const { unlink } = await import("fs/promises")
+        await unlink(filepath)
+      } catch (cleanupError) {
+        console.error("File cleanup error:", cleanupError)
+      }
+      return NextResponse.json(
+        { error: "Failed to save image metadata" },
+        { status: 500 }
+      )
+    }
 
     return NextResponse.json({
       success: true,
       image: {
         id: image.id,
         filename: image.filename,
-        path: image.path,
+        path: `/api/images/${image.filename}`,
       },
     })
   } catch (error) {

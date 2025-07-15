@@ -8,6 +8,25 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/api/images/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3030',
+        pathname: '/api/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'udaisukh.idea2reality.tech',
+        pathname: '/api/images/**',
+      },
+    ],
   },
 }
 
